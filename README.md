@@ -39,3 +39,17 @@ Widget build(BuildContext context) {
 ![result](IMG/6.png)
 
 ![result](IMG/5.png)
+
+# Practical 3: Handling JSON errors
+
+## Question 5
+
+- Explain the meaning of safer and more maintainable code!
+
+Safer code means the code includes protection against errors that might occur during runtime, such as empty values, "null" from an API, or mismatched data types. By adding checks and fallback values (like 0 for numbers or an empty string for text), the app won’t crash or behave unexpectedly when receiving bad data. This keeps the application stable even when the input isn’t perfect.
+
+Meanwhile, more maintainable code means the code is written clearly, consistently, and in a way that’s easy to understand—both for other developers and for yourself in the future. Using constant keys like keyName or keyPrice helps avoid typing mistakes and makes changes easier; if the API structure changes, updating one place is enough. Following clean patterns and avoiding repeated logic makes the code more organized, easier to test, and faster to improve over time.
+
+- Capture your lab results and attach them to the README.
+
+![result](IMG/7.png)
