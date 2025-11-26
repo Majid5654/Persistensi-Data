@@ -15,3 +15,9 @@ Widget build(BuildContext context) {
    );
  }
 ```
+
+## Question 2
+
+- Include the screen capture results in your lab report
+
+![result](IMG/1.png)
