@@ -9,7 +9,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,6 +29,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Pizza> myPizzas = [];
   String pizzaString = '';
+
   @override
   void initState() {
     super.initState();
@@ -66,15 +66,25 @@ class _MyHomePageState extends State<MyHomePage> {
     ).loadString('assets/pizzalist.json');
 
     var pizzaMapList = json.decode(myString);
-    return parsePizzas(pizzaMapList);
+
+    List<Pizza> pizzas = parsePizzas(pizzaMapList);
+
+    String jsonOutput = convertToJSON(pizzas);
+    print(jsonOutput);
+
+    return pizzas;
   }
 
   List<Pizza> parsePizzas(List<dynamic> pizzaMapList) {
     List<Pizza> list = [];
 
     for (var pizza in pizzaMapList) {
-      list.add(Pizza.fromJson(pizza));
+      list.add(Pizza.fromJson(pizza as Map<String, dynamic>));
     }
     return list;
+  }
+
+  String convertToJSON(List<Pizza> pizzas) {
+    return jsonEncode(pizzas.map((p) => p.toJson()).toList());
   }
 }

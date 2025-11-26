@@ -27,3 +27,15 @@ Widget build(BuildContext context) {
 - Include the screen capture results in your lab report.
 
 ![result](IMG/2.png)
+
+![result](IMG/3.png)
+
+# Practical 2: Handle JSON data compatibility
+
+## Question 4
+
+- Capture the results of running your application, then import it into your lab report!
+
+![result](IMG/6.png)
+
+![result](IMG/5.png)
