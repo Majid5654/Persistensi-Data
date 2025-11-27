@@ -1,6 +1,7 @@
 import 'dart:convert';
 import './model/pizza.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,12 +28,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Future readAndWritePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    appCounter = prefs.getInt('appCounter') ?? 0;
+    appCounter++;
+
+    await prefs.setInt('appCounter', appCounter);
+    setState(() {
+      appCounter = appCounter;
+    });
+  }
+
+  int appCounter = 0;
   List<Pizza> myPizzas = [];
   String pizzaString = '';
 
   @override
   void initState() {
     super.initState();
+    readAndWritePreference();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       readJsonFile().then((value) {
         setState(() {
@@ -44,19 +58,26 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: myPizzas.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: myPizzas.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(myPizzas[index].pizzaName),
-                  subtitle: Text(myPizzas[index].description),
-                );
-              },
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              'You have opened the app $appCounter times.',
+              style: const TextStyle(fontSize: 20),
             ),
+            ElevatedButton(
+              onPressed: () {
+                deletePreference();
+              },
+              child: const Text('Reset counter'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -86,5 +107,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String convertToJSON(List<Pizza> pizzas) {
     return jsonEncode(pizzas.map((p) => p.toJson()).toList());
+  }
+
+  Future resetCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('appCounter', 0);
+
+    setState(() {
+      appCounter = 0;
+    });
+  }
+
+  Future deletePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    setState(() {
+      appCounter = 0;
+    });
   }
 }

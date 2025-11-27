@@ -1,4 +1,4 @@
-# Practical 1: Convert Dart model to JSON
+# Lab 1: Convert Dart model to JSON
 
 ## Question 1
 
@@ -30,7 +30,7 @@ Widget build(BuildContext context) {
 
 ![result](IMG/3.png)
 
-# Practical 2: Handle JSON data compatibility
+# Lab 2: Handle JSON data compatibility
 
 ## Question 4
 
@@ -40,7 +40,7 @@ Widget build(BuildContext context) {
 
 ![result](IMG/5.png)
 
-# Practical 3: Handling JSON errors
+# Lab 3: Handling JSON errors
 
 ## Question 5
 
@@ -53,3 +53,11 @@ Meanwhile, more maintainable code means the code is written clearly, consistentl
 - Capture your lab results and attach them to the README.
 
 ![result](IMG/7.png)
+
+# Lab 4: SharedPreferences
+
+## Question 6
+
+- Capture your practical results in GIF format and attach them to the README.
+
+![result](IMG/1.gif)
