@@ -69,3 +69,21 @@ Meanwhile, more maintainable code means the code is written clearly, consistentl
 - Capture your lab results and attach them to the README.
 
 ![result](IMG/10.png)
+
+# Lab 6: Accessing the filesystem with directories
+
+## Question 8
+
+- Explain the meaning of the code in steps 3 and 7!
+
+### Step 3 — Meaning of writeFile()
+
+This method writes text into a file stored in the app’s documents directory. It uses myFile.writeAsString() to save the text (which you replace with your full name and student ID). The method runs inside a try block so the app does not crash if an error occurs. If writing succeeds, it returns true; if it fails, it returns false.
+
+### Step 7 — Meaning of the Run Process
+
+When the app runs, the file is first created and written during initState(). After pressing the Read File button, the readFile() method reads the text from that file and updates fileText using setState(). The UI then refreshes and displays the written content—showing your name and student ID on the screen.
+
+- Capture your practical results in GIF format and attach them to the README.
+
+![result](IMG/Andro.gif)
