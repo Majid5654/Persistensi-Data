@@ -2,6 +2,7 @@ import 'dart:convert';
 import './model/pizza.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +29,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String documentsPath = '';
+  String tempPath = '';
   Future readAndWritePreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     appCounter = prefs.getInt('appCounter') ?? 0;
@@ -46,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    getPaths();
     readAndWritePreference();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       readJsonFile().then((value) {
@@ -59,24 +63,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              'You have opened the app $appCounter times.',
-              style: const TextStyle(fontSize: 20),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                deletePreference();
-              },
-              child: const Text('Reset counter'),
-            ),
-          ],
-        ),
+      appBar: AppBar(title: const Text('Path Provider')),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text('Doc path: $documentsPath'),
+          Text('Temp path $tempPath'),
+        ],
       ),
     );
   }
@@ -123,6 +119,16 @@ class _MyHomePageState extends State<MyHomePage> {
     await prefs.clear();
     setState(() {
       appCounter = 0;
+    });
+  }
+
+  Future getPaths() async {
+    final docDir = await getApplicationDocumentsDirectory();
+    final tempDir = await getTemporaryDirectory();
+
+    setState(() {
+      documentsPath = docDir.path;
+      tempPath = tempDir.path;
     });
   }
 }
