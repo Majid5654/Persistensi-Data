@@ -95,3 +95,28 @@ When the app runs, the file is first created and written during initState(). Aft
 -Capture your practical results in GIF format and attach them to the README.
 
 ![result](IMG/Andro2.gif)
+
+# RESTful API
+
+# Lab 1: Creating a Mock API service
+
+## Question 1
+
+- Add your nickname to titlethe app as an identity for your work
+- Change the application theme color according to your preference.
+
+```.dart:
+Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Erwan Majid JSON')),
+      body: FutureBuilder<List<Pizza>>(
+        future: callPizzas(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+```
+
+- Capture the results of your application, then enter it into the report in the README and commit the results of the answer to Question 1 with the message "W14: Answer to Question 1"
+
+![result](IMG/11.png)

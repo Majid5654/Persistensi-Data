@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'httphelper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -76,33 +77,36 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Path Provider')),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          TextField(controller: pwdController),
+      appBar: AppBar(title: const Text('Erwan Majid JSON')),
+      body: FutureBuilder<List<Pizza>>(
+        future: callPizzas(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-          ElevatedButton(
-            child: const Text('Save Value'),
-            onPressed: () {
-              writeToSecureStorage();
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No data'));
+          }
+
+          final pizzas = snapshot.data!;
+
+          return ListView.builder(
+            itemCount: pizzas.length,
+            itemBuilder: (context, i) {
+              return ListTile(
+                title: Text(pizzas[i].pizzaName),
+                subtitle: Text(
+                  '${pizzas[i].description} - € ${pizzas[i].price}',
+                ),
+              );
             },
-          ),
-
-          ElevatedButton(
-            child: const Text('Read Value'),
-            onPressed: () {
-              readFromSecureStorage().then((value) {
-                setState(() {
-                  myPass = value;
-                });
-              });
-            },
-          ),
-
-          Text("Secure Value: $myPass"),
-          Text("File Content: $fileText"),
-        ],
+          );
+        },
       ),
     );
   }
@@ -192,5 +196,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<String> readFromSecureStorage() async {
     String secret = await storage.read(key: myKey) ?? '';
     return secret;
+  }
+
+  Future<List<Pizza>> callPizzas() async {
+    HttpHelper helper = HttpHelper();
+    List<Pizza> pizzas = await helper.getPizzaList();
+    return pizzas;
   }
 }
