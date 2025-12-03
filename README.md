@@ -152,8 +152,24 @@ Widget build(BuildContext context) {
 
 - Change any of the data with your Name and NIM, then notice the result in Wiremock.
 
-  ![result](IMG/4.gif)
+![result](IMG/6.gif)
 
-  ![result](IMG/18.png)
+![result](IMG/22.png)
 
-  ![result](IMG/15.png)
+![result](IMG/15.png)
+
+# Lab 4 : Deleting Data from Web Services (DELETE)
+
+-Screenshot of the WireMock Delete Pizza
+
+![result](IMG/19.png)
+
+## Question 4
+
+- Capture your application results in the form of GIFs in the README and commit the results of Question 4 answers with the message "W14: Answer Question 4"
+
+![result](IMG/5.gif)
+
+![result](IMG/20.png)
+
+![result](IMG/21.png)
