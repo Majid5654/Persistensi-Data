@@ -3,6 +3,7 @@ const keyName = 'pizzaName';
 const keyDescription = 'description';
 const keyPrice = 'price';
 const keyImage = 'imageUrl';
+const keyCategory = 'category';
 
 class Pizza {
   int id;
@@ -10,6 +11,7 @@ class Pizza {
   String description;
   String imageUrl;
   double price;
+  String category;
 
   Pizza({
     required this.id,
@@ -17,6 +19,7 @@ class Pizza {
     required this.description,
     required this.imageUrl,
     required this.price,
+    required this.category,
   });
 
   // --- Practical 2 Improvements ---
@@ -31,6 +34,7 @@ class Pizza {
           : (json[keyDescription]?.toString() ?? ''),
       imageUrl: json[keyImage]?.toString() ?? '',
       price: double.tryParse(json[keyPrice]?.toString() ?? '') ?? 0.0,
+      category: json[keyCategory]?.toString() ?? '',
     );
   }
 
@@ -42,6 +46,7 @@ class Pizza {
       keyDescription: description,
       keyImage: imageUrl,
       keyPrice: price,
+      keyCategory: category,
     };
   }
 

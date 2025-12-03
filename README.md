@@ -120,3 +120,14 @@ Widget build(BuildContext context) {
 - Capture the results of your application, then enter it into the report in the README and commit the results of the answer to Question 1 with the message "W14: Answer to Question 1"
 
 ![result](IMG/11.png)
+
+# Lab 2: Sending Data to Web Service (POST)
+
+![result](IMG/2.gif)
+
+## Question 2
+
+- Add new fields in JSON or POST to Wiremock!
+  Capture your application results as a GIF in the README and commit the answer to Question 2 with the message "W14: Answer to Question 2"
+
+![result](IMG/3.gif)

@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'httphelper.dart';
+import './model/pizza_detail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,6 +33,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String operationResult = '';
+  final txtCategory = TextEditingController();
+
+  final txtId = TextEditingController();
+  final txtName = TextEditingController();
+  final txtDescription = TextEditingController();
+  final txtPrice = TextEditingController();
+  final txtImageUrl = TextEditingController();
   final pwdController = TextEditingController();
   final storage = const FlutterSecureStorage();
   final myKey = 'myPass';
@@ -77,34 +86,73 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Erwan Majid JSON')),
-      body: FutureBuilder<List<Pizza>>(
-        future: callPizzas(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No data'));
-          }
-
-          final pizzas = snapshot.data!;
-
-          return ListView.builder(
-            itemCount: pizzas.length,
-            itemBuilder: (context, i) {
-              return ListTile(
-                title: Text(pizzas[i].pizzaName),
-                subtitle: Text(
-                  '${pizzas[i].description} - € ${pizzas[i].price}',
+      appBar: AppBar(title: const Text('Pizza Detail')),
+      body: Padding(
+        padding: const EdgeInsets.all(12),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                operationResult,
+                style: TextStyle(
+                  backgroundColor: Colors.green[200],
+                  color: Colors.black,
                 ),
-              );
-            },
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: txtId,
+                decoration: const InputDecoration(hintText: 'Insert ID'),
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: txtName,
+                decoration: const InputDecoration(
+                  hintText: 'Insert Pizza Name',
+                ),
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: txtDescription,
+                decoration: const InputDecoration(
+                  hintText: 'Insert Description',
+                ),
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: txtPrice,
+                decoration: const InputDecoration(hintText: 'Insert Price'),
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: txtImageUrl,
+                decoration: const InputDecoration(hintText: 'Insert Image Url'),
+              ),
+              const SizedBox(height: 48),
+              TextField(
+                controller: txtCategory,
+                decoration: const InputDecoration(hintText: 'Insert Category'),
+              ),
+
+              ElevatedButton(
+                child: const Text('Send Post'),
+                onPressed: () {
+                  postPizza();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const PizzaDetailScreen()),
           );
         },
       ),
@@ -202,5 +250,24 @@ class _MyHomePageState extends State<MyHomePage> {
     HttpHelper helper = HttpHelper();
     List<Pizza> pizzas = await helper.getPizzaList();
     return pizzas;
+  }
+
+  Future postPizza() async {
+    HttpHelper helper = HttpHelper();
+
+    Pizza pizza = Pizza(
+      id: int.tryParse(txtId.text) ?? 0,
+      pizzaName: txtName.text,
+      description: txtDescription.text,
+      imageUrl: txtImageUrl.text,
+      price: double.tryParse(txtPrice.text) ?? 0.0,
+      category: txtCategory.text,
+    );
+
+    String result = await helper.postPizza(pizza);
+
+    setState(() {
+      operationResult = result;
+    });
   }
 }
