@@ -100,6 +100,10 @@ When the app runs, the file is first created and written during initState(). Aft
 
 # Lab 1: Creating a Mock API service
 
+- Screenshot of the WireMock get Pizza
+
+![result](IMG/14.png)
+
 ## Question 1
 
 - Add your nickname to titlethe app as an identity for your work
@@ -123,7 +127,9 @@ Widget build(BuildContext context) {
 
 # Lab 2: Sending Data to Web Service (POST)
 
-![result](IMG/2.gif)
+- Screenshot of the WireMock post Pizza
+
+![result](IMG/13.png)
 
 ## Question 2
 
@@ -131,3 +137,23 @@ Widget build(BuildContext context) {
   Capture your application results as a GIF in the README and commit the answer to Question 2 with the message "W14: Answer to Question 2"
 
 ![result](IMG/3.gif)
+
+![result](IMG/16.png)
+
+![result](IMG/17.png)
+
+# Lab 3: Updating Data in Web Service (PUT)
+
+- Screenshot of the WireMock Put Pizza
+
+![result](IMG/12.png)
+
+## Question 3
+
+- Change any of the data with your Name and NIM, then notice the result in Wiremock.
+
+  ![result](IMG/4.gif)
+
+  ![result](IMG/18.png)
+
+  ![result](IMG/15.png)
